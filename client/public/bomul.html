@@ -2,9 +2,16 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>보물 여행</title>
 <meta name="description" content="역사와 설화를 찾아 떠나는 전설여행 — 코스 소개와 신청">
+<meta name="theme-color" content="#05060a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="보물 여행">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
@@ -310,8 +317,8 @@
   }
   @media (max-width:540px){
     .nav nav a{padding:8px 10px;font-size:1.15rem}
-    .brand{font-size:2.35rem}
-    .brand .chest{width:42px;height:36px}
+    .brand{font-size:1.55rem}
+    .brand .chest{width:34px;height:28px}
     .preview-grid{grid-template-columns:1fr}
     .course-grid{grid-template-columns:1fr}
     .story-list{grid-template-columns:1fr}
@@ -382,6 +389,27 @@
   .coming-big{font-size:clamp(2.6rem,7.2vw,4rem)}
   .coming-prize{font-size:1.4rem}
   footer{font-size:1.15rem}
+
+  html,body{overflow-x:hidden}
+  .nav-toggle{position:absolute;top:10px;right:16px;z-index:40;display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0;padding:0;border:0;border-radius:10px;background:#14685e;color:#fff;font-size:26px;line-height:1;cursor:pointer}
+  @media (min-width:881px){.nav-toggle{display:none}}
+  .nav .wrap{position:relative}
+  .btn,.nav nav a,.chip,.field input,.field textarea{touch-action:manipulation}
+  .field input,.field textarea{font-size:16px}
+  @media (max-width:880px){
+    .nav .wrap{flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding-right:64px}
+    .brand{font-size:1.7rem}
+    .brand .chest{width:36px;height:30px}
+    .nav-toggle{display:grid;place-items:center;flex:none;min-width:44px}
+    .nav nav{display:none;flex-direction:column;align-items:stretch;width:100%;margin-left:0;padding:8px 0 12px;gap:4px}
+    .nav.is-open nav{display:flex}
+    .nav nav a{min-height:48px;display:flex;align-items:center;font-size:1.2rem;padding:12px 14px}
+    .hero{min-height:0;padding-block:28px 40px}
+    .cta-row{flex-wrap:wrap}
+    .btn{min-height:48px}
+    .legal{gap:10px 16px}
+    .company-mark img{height:72px}
+  }
 </style>
 </head>
 <body>
@@ -389,7 +417,8 @@
 <header class="nav">
   <div class="wrap">
     <div class="brand" data-go="home"><svg class="chest" viewBox="0 0 80 68" aria-hidden="true"><path d="M18 36 10 12c16-10 44-10 60 0L62 36c-12-6-32-6-44 0z" fill="#f6d36a"/><path d="M16 18c14-6 38-6 50 0" fill="none" stroke="#7a4a0e" stroke-width="2.2" stroke-linecap="round"/><path d="M14 34h52v8c-8 4-44 4-52 0v-8z" fill="#5c3a12"/><ellipse cx="40" cy="38" rx="18" ry="5" fill="#ffe9ad"/><circle cx="29" cy="36" r="4" fill="#ffd56a" stroke="#8a5410" stroke-width="1.1"/><circle cx="40" cy="34" r="4.5" fill="#fff6d0" stroke="#8a5410" stroke-width="1.1"/><circle cx="51" cy="37" r="3.5" fill="#f0c14a" stroke="#8a5410" stroke-width="1.1"/><path d="M12 42h56v14c0 6-5 8-10 8H22c-5 0-10-2-10-8V42z" fill="#e2a52e"/><path d="M12 42h56v6H12z" fill="#c4841c"/><rect x="35" y="50" width="10" height="8" rx="1.6" fill="#6b3f10"/><circle cx="40" cy="54" r="1.6" fill="#ffe9ad"/></svg>보물 여행</div>
-    <nav>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="메뉴">☰</button>
+    <nav id="siteNav">
       <a data-go="home">홈</a>
       <a data-go="courses">전체 코스</a>
       <a data-go="apply">신청·문의</a>
@@ -581,7 +610,7 @@
 </footer>
 
 <script>
-const API_BASE = "http://localhost:4000";
+const API_BASE = "";
 function storedToken(){ return localStorage.getItem("token") || sessionStorage.getItem("token"); }
 /* =========================================================
    코스 데이터 — 여기에 자료를 추가/수정하세요.
@@ -2364,7 +2393,13 @@ function renderDetail(id){
     </div>`;
 }
 
-function go(name){ location.hash = name; }
+function closeSiteNav(){
+  const header=document.querySelector("header.nav");
+  const toggle=document.querySelector(".nav-toggle");
+  if(header) header.classList.remove("is-open");
+  if(toggle) toggle.setAttribute("aria-expanded","false");
+}
+function go(name){ location.hash = name; closeSiteNav(); }
 function show(viewKey){
   Object.values(views).forEach(sel=>{const el=$(sel);if(el)el.hidden=true;});
   const el=$(views[viewKey]); if(el) el.hidden=false;
@@ -2380,6 +2415,14 @@ function route(){
 
 /* 이벤트 위임 */
 document.addEventListener('click',async e=>{
+  const toggle=e.target.closest('.nav-toggle');
+  if(toggle){
+    const header=toggle.closest('.nav');
+    const open=header.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    return;
+  }
+  if(e.target.closest('.nav nav a')) closeSiteNav();
   const playBtn=e.target.closest('[data-play]');
   if(playBtn){
     const video=document.getElementById(playBtn.dataset.play);
@@ -2553,7 +2596,7 @@ function startStarfield(){
   if(!canvas) return;
   const ctx=canvas.getContext("2d");
   const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const stars=Array.from({length:780},()=>spawn(true));
+  const stars=Array.from({length:window.innerWidth<700?280:780},()=>spawn(true));
   let width=1, height=1;
   function spawn(initial){
     return {x:(Math.random()-.5)*2, y:(Math.random()-.5)*2, z:initial?Math.random():1};
@@ -2610,6 +2653,9 @@ route();
 loadAccount();
 startStarfield();
 applyRemoteCourses().then(()=>refreshCourseViews());
+if("serviceWorker" in navigator && location.protocol === "https:"){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));
+}
 </script>
 </body>
 </html>

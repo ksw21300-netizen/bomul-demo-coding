@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './admin.css';
 
-const API_BASE = 'http://localhost:4000';
+const API_BASE = '';
 const CATEGORIES = ['경주', '제주', '부여', '공주', '강원', '설악', '전라', '기타'];
 
 function loadCloudinary() {

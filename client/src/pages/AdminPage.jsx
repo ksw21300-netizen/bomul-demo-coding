@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './admin.css';
 
-const API_BASE = 'http://localhost:4000';
+const API_BASE = '';
 
 const ACTIONS = [
   { id: 'course', label: '유료 코스 등록하기', icon: 'plus', to: '/admin/legend-courses' },

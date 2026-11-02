@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import './admin.css';
 
-const API_BASE = 'http://localhost:4000';
+const API_BASE = '';
 
 function storedToken() {
   return localStorage.getItem('token') || sessionStorage.getItem('token');
