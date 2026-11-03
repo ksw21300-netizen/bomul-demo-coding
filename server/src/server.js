@@ -11,9 +11,9 @@ if (existsSync(envPath)) process.loadEnvFile(envPath);
 
 const { PORT = 4000 } = process.env;
 const LOCAL_MONGODB_URI = 'mongodb://127.0.0.1:27017/coding-bomul';
-const mongoUri = typeof process.env.MONGO_URI === 'string' && process.env.MONGO_URI.trim()
-  ? process.env.MONGO_URI.trim()
-  : LOCAL_MONGODB_URI;
+const mongoUri = process.env.MONGODB_ATLAS_URL?.trim()
+  || process.env.MONGO_URI?.trim()
+  || LOCAL_MONGODB_URI;
 const usingAtlas = mongoUri.startsWith('mongodb+srv://') || mongoUri.includes('mongodb.net');
 
 if (usingAtlas) {
