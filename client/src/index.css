@@ -490,30 +490,10 @@ a {
 
 @media (max-width: 800px) {
   .page-title {
-    font-size: 28px;
+    font-size: 36px;
   }
 
   .password-row {
     grid-template-columns: 1fr;
-  }
-
-  .login-page {
-    padding: 24px 12px 48px;
-  }
-
-  .login-card {
-    width: min(420px, calc(100% - 8px));
-    padding: 28px 18px 20px;
-  }
-
-  .login-card input:not([type="checkbox"]),
-  .form-card input,
-  .form-card textarea {
-    font-size: 16px;
-  }
-
-  .submit-button,
-  .login-submit {
-    min-height: 48px;
   }
 }

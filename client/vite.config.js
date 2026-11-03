@@ -5,7 +5,6 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: true,
     port: 5173,
     // /api 요청을 Express(4000)로 넘긴다. 브라우저 CORS 설정이 필요 없다.
     proxy: {

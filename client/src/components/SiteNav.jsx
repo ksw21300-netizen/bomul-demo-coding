@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import AuthMenu from './AuthMenu.jsx';
 import CartLink from './CartLink.jsx';
 
-const API_BASE = '';
+const API_BASE = 'http://localhost:4000';
 
 function storedToken() {
   return localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -36,25 +36,13 @@ function BoardNavLink() {
 }
 
 function SiteNav({ onToggleTheme }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
-    <header className={`nav${menuOpen ? ' is-open' : ''}`}>
+    <header className="nav">
       <div className="wrap">
-        <Link className="brand" to="/" onClick={() => setMenuOpen(false)}>
+        <Link className="brand" to="/">
           <span className="seal">寶</span>보물 여행
         </Link>
-        <button
-          className="nav-toggle"
-          type="button"
-          aria-expanded={menuOpen}
-          aria-controls="siteNav"
-          aria-label="메뉴"
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          ☰
-        </button>
-        <nav id="siteNav" onClick={() => setMenuOpen(false)}>
+        <nav>
           <NavLink to="/" end>
             홈
           </NavLink>

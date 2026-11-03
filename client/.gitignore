@@ -1,23 +1,29 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
+# 비밀번호가 들어 있는 파일 — GitHub에 올리지 않습니다
 .env
-dist
-dist-ssr
+.env.*
+!.env.example
 *.local
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# 설치 폴더 — 용량이 크고 다시 설치하면 됩니다
+node_modules/
+
+# 빌드 결과 — Vercel이 다시 만듭니다
+dist/
+dist-ssr/
+
+# 로그
+logs/
+*.log
+npm-debug.log*
+
+# Vercel 로컬 캐시
+.vercel/
+
+# OS / 에디터
 .DS_Store
+Thumbs.db
+.idea/
+.vscode/
 *.suo
 *.ntvs*
 *.njsproj

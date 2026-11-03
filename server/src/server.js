@@ -1,4 +1,5 @@
 import { existsSync } from 'node:fs';
+import dns from 'node:dns';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import mongoose from 'mongoose';
@@ -8,22 +9,31 @@ import { seedLegendCourses } from './controllers/legendCourses.js';
 const envPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../.env');
 if (existsSync(envPath)) process.loadEnvFile(envPath);
 
-const { PORT = 4000, MONGODB_URI } = process.env;
+const { PORT = 4000 } = process.env;
+const LOCAL_MONGODB_URI = 'mongodb://127.0.0.1:27017/coding-bomul';
+const mongoUri = typeof process.env.MONGO_URI === 'string' && process.env.MONGO_URI.trim()
+  ? process.env.MONGO_URI.trim()
+  : LOCAL_MONGODB_URI;
+const usingAtlas = mongoUri.startsWith('mongodb+srv://') || mongoUri.includes('mongodb.net');
 
-if (!MONGODB_URI) {
-  console.error('MONGODB_URI가 없습니다. server/.env 파일을 확인하세요 (.env.example 참고).');
-  process.exit(1);
+if (usingAtlas) {
+  // Node가 127.0.0.1 DNS만 쓰면 mongodb+srv 조회가 거절된다. 공개 DNS로 우회한다.
+  const servers = dns.getServers();
+  if (servers.every((server) => server === '127.0.0.1' || server === '::1' || server.startsWith('127.0.0.1'))) {
+    dns.setServers(['8.8.8.8', '1.1.1.1']);
+  }
+  dns.setDefaultResultOrder('ipv4first');
 }
 
 try {
-  // 기본값(30초) 대신 5초 만에 실패해서 MongoDB가 꺼져 있는지 바로 알 수 있게 함
-  await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+  // Atlas는 DNS 조회가 있어 조금 더 기다리고, 로컬은 꺼져 있으면 빨리 실패한다.
+  await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: usingAtlas ? 15000 : 5000 });
 } catch (error) {
   console.error('MongoDB 연결 실패:', error.message);
   process.exit(1);
 }
 await seedLegendCourses();
-console.log(`MongoDB 연결됨: ${mongoose.connection.name}`);
+console.log(`MongoDB 연결됨: ${mongoose.connection.name} (${usingAtlas ? 'Atlas' : '로컬'})`);
 
 const server = app.listen(PORT, (error) => {
   if (error) throw error;

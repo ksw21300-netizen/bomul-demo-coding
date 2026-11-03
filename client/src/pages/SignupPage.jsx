@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const API_BASE = '';
+const API_BASE = 'http://localhost:4000';
 
 const initialForm = {
   user_id: '',

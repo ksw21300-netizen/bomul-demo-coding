@@ -1570,79 +1570,28 @@
   }
 }
 
-.bomul .nav-toggle {
-  display: none;
-  width: 44px;
-  height: 44px;
-  margin-left: auto;
-  padding: 0;
-  border: 0;
-  border-radius: 10px;
-  background: var(--primary);
-  color: #fff;
-  font-size: 26px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-@media (max-width: 880px) {
-  .bomul .nav-toggle {
-    display: grid;
-    place-items: center;
-    flex: none;
-    min-width: 44px;
-  }
-
+@media (max-width: 540px) {
   .bomul .nav .wrap {
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px 12px;
-    padding-right: 16px;
+    gap: 8px 16px;
   }
 
   .bomul .brand {
-    font-size: 1.5rem;
-  }
-
-  .bomul .toggle {
-    display: none;
+    font-size: 1.8rem;
   }
 
   .bomul .nav nav {
-    display: none;
-    order: 3;
+    order: 1;
     width: 100%;
     margin-left: 0;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .bomul .nav.is-open nav {
-    display: flex;
   }
 
   .bomul .nav nav a {
-    min-height: 48px;
-    display: flex;
-    align-items: center;
-    padding: 12px 10px;
-    font-size: 1.05rem;
+    padding: 7px 8px;
   }
 
   .bomul .nav-tools {
-    margin-left: 0;
-  }
-
-  .bomul .cart-link {
-    position: static;
-    transform: none;
-  }
-}
-
-@media (max-width: 540px) {
-  .bomul .brand {
-    font-size: 1.8rem;
+    margin-left: auto;
   }
 
   .bomul .preview-grid,
@@ -1704,7 +1653,6 @@
   background: var(--bg);
   color: var(--ink);
   font: inherit;
-  font-size: 16px;
 }
 
 .bomul .board-compose .btn,

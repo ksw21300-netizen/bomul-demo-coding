@@ -16,11 +16,9 @@ const app = express();
 function isLocalClient(origin) {
   try {
     const url = new URL(origin);
-    const host = url.hostname;
-    const local = host === 'localhost' || host === '127.0.0.1';
-    const lan = /^(192\.168\.|10\.|172\.(1[6-9]|2\d|3[0-1])\.)/.test(host);
+    const local = url.hostname === 'localhost' || url.hostname === '127.0.0.1';
     const port = Number(url.port);
-    return url.protocol === 'http:' && (local || lan) && port >= 5173 && port <= 5179;
+    return url.protocol === 'http:' && local && port >= 5173 && port <= 5179;
   } catch {
     return false;
   }

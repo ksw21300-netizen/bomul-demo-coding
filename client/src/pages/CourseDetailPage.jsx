@@ -3,7 +3,7 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import ImageSlot from '../components/ImageSlot.jsx';
 import { COURSES } from '../data/courses.js';
 
-const API_BASE = '';
+const API_BASE = 'http://localhost:4000';
 const EMPTY_INFO = { 거리: null, 소요시간: null, 난이도: null, 집결지: null };
 
 function storedToken() {
