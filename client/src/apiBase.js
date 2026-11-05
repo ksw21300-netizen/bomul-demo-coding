@@ -6,7 +6,7 @@ function resolveApiBase() {
   if (import.meta.env.DEV) {
     return 'http://localhost:4000';
   }
-  return 'https://bomul-backend-ee5313fb7ed6.herokuapp.com';
+  return '';
 }
 
 export const API_BASE = resolveApiBase();
