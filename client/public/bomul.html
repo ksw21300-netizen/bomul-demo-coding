@@ -751,7 +751,9 @@
 </footer>
 
 <script>
-const API_BASE = "http://localhost:4000";
+const API_BASE = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+  ? "http://localhost:4000"
+  : "https://audience-because-shopzilla-discrimination.trycloudflare.com";
 function storedToken(){ return localStorage.getItem("token") || sessionStorage.getItem("token"); }
 /* =========================================================
    코스 데이터 — 여기에 자료를 추가/수정하세요.
