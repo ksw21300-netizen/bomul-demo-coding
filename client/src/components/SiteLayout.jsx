@@ -12,7 +12,7 @@ function SiteLayout() {
 
   return (
     <div className="site">
-      {isLoginPage ? (
+      {isLoginPage || isSignup ? (
         <div className="bomul bomul-bar" data-theme={theme ?? undefined}>
           <SiteNav onToggleTheme={toggleTheme} />
         </div>

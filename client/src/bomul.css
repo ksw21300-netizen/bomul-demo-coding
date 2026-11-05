@@ -201,7 +201,7 @@
   .bomul .brand {
     flex: none;
     gap: 12px;
-    font-size: 2.4rem;
+    font-size: 2rem;
   }
 
   .bomul .nav-links,
@@ -1676,7 +1676,7 @@
   .bomul .brand {
     flex: none;
     overflow: visible;
-    font-size: 2.4rem;
+    font-size: 2rem;
   }
 
   .bomul .nav-links,

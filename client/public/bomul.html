@@ -76,7 +76,7 @@
   .nav nav a:hover,.nav nav a.on{color:var(--ink);background:var(--surface-2)}
   @media (min-width:769px){
     .nav .wrap{gap:16px;padding-block:12px}
-    .brand{flex:none;gap:14px;font-size:3.05rem}
+    .brand{flex:none;gap:14px;font-size:2.2rem}
     .brand .chest{width:62px;height:52px}
     .nav-toggle{display:none}
     .nav .nav-links{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;margin-left:auto}
@@ -502,7 +502,7 @@
       height:auto;
       padding-block:12px;
     }
-    .brand{flex:none;overflow:visible;font-size:3.05rem;gap:14px}
+    .brand{flex:none;overflow:visible;font-size:2.2rem;gap:14px}
     .brand .chest{width:62px;height:52px}
     .nav-toggle{display:none}
     .nav .nav-links{
@@ -566,6 +566,7 @@
       <a href="/cart">장바구니 <span id="cartCount"></span></a>
       <a href="/order">주문</a>
       <a href="/login" id="loginLink">로그인</a>
+      <a href="/signup" id="signupLink">회원가입</a>
     </nav>
   </div>
 </header>
@@ -2674,6 +2675,7 @@ function refreshCourseViews(){
 async function loadAccount(){
   const saved=storedToken();
   const link=$("#loginLink");
+  const signup=$("#signupLink");
   const count=$("#cartCount");
   const board=$("#boardLink");
   if(!saved){
@@ -2689,6 +2691,7 @@ async function loadAccount(){
       hasMembership=user.user_type==="admin" || Boolean(user.membership && user.membership.active);
       link.textContent=user.user_type==="admin"?"관리자":(user.nickname||user.name||"내 정보");
       link.href=user.user_type==="admin"?"/admin":"/cart";
+      if(signup) signup.hidden=true;
       if(board) board.hidden=false;
     }
     const cart=await fetch(API_BASE+"/api/carts",{headers:{authorization:`Bearer ${saved}`}});

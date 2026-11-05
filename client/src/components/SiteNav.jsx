@@ -115,6 +115,9 @@ function SiteNav({ onToggleTheme }) {
         <NavLink to="/login" onClick={closeMenu}>
           로그인
         </NavLink>
+        <NavLink to="/signup" onClick={closeMenu}>
+          회원가입
+        </NavLink>
       </nav>
     </header>
   );
