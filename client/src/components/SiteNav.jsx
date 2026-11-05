@@ -66,6 +66,16 @@ function SiteNav({ onToggleTheme }) {
         <Link className="brand" to="/" onClick={closeMenu}>
           <span className="seal">寶</span>보물 여행
         </Link>
+        <button
+          className="nav-toggle"
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
+          aria-label={menuOpen ? '메뉴 닫기' : '메뉴 열기'}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          ☰
+        </button>
         <nav className="nav-links" aria-label="주요 메뉴">
           <NavLink to="/" end>
             홈
@@ -81,16 +91,6 @@ function SiteNav({ onToggleTheme }) {
           <AuthMenu />
           <CartLink />
         </div>
-        <button
-          className="nav-toggle"
-          type="button"
-          aria-expanded={menuOpen}
-          aria-controls="mobile-nav"
-          aria-label={menuOpen ? '메뉴 닫기' : '메뉴 열기'}
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          ☰
-        </button>
       </div>
       <nav
         className={`nav-drawer${menuOpen ? ' is-open' : ''}`}

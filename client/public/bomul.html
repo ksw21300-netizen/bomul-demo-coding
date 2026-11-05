@@ -49,16 +49,38 @@
   img,video{max-width:100%;display:block}
   .wrap{max-width:var(--wrap);margin:0 auto;padding-inline:20px}
 
-  /* header */
+  /* header — 기본은 휴대폰: 작은 로고 + 햄버거. PC는 769px 이상에서 복구 */
   .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .nav .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;padding-block:12px}
-  .brand{display:flex;align-items:center;gap:14px;grid-column:1;min-width:0;font-family:var(--display);font-weight:700;font-size:3.05rem;color:var(--feature-blue);cursor:pointer;white-space:nowrap}
-  .brand .chest{width:62px;height:52px;flex:none;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
-  .nav .nav-links{grid-column:2;justify-self:end;margin-left:0;display:flex;gap:8px;flex-wrap:nowrap;align-items:center}
-  .nav-toggle{grid-column:3}
+  .nav .wrap{display:flex;flex-wrap:nowrap;align-items:center;gap:10px;padding-block:10px}
+  .brand{display:flex;align-items:center;gap:8px;min-width:0;flex:1;font-family:var(--display);font-weight:700;font-size:1.1rem;color:var(--feature-blue);cursor:pointer;white-space:nowrap}
+  .brand .chest{width:26px;height:22px;flex:none;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
+  .nav-toggle{
+    display:inline-flex;
+    flex:none;
+    align-items:center;
+    justify-content:center;
+    width:44px;
+    height:44px;
+    margin:0;
+    padding:0;
+    border:1px solid var(--line);
+    border-radius:4px;
+    background:#14161d;
+    color:var(--ink);
+    font-size:1.35rem;
+    line-height:1;
+    cursor:pointer;
+  }
+  .nav .nav-links{display:none}
   .nav nav a{font-size:1.4rem;color:var(--muted);padding:8px 14px;border-radius:4px;cursor:pointer;white-space:nowrap}
   .nav nav a:hover,.nav nav a.on{color:var(--ink);background:var(--surface-2)}
-  .nav-toggle{display:none}
+  @media (min-width:769px){
+    .nav .wrap{gap:16px;padding-block:12px}
+    .brand{flex:none;gap:14px;font-size:3.05rem}
+    .brand .chest{width:62px;height:52px}
+    .nav-toggle{display:none}
+    .nav .nav-links{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;margin-left:auto}
+  }
 
   /* buttons */
   .btn{font:inherit;font-weight:700;border-radius:3px;padding:12px 24px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;border:1px solid transparent;letter-spacing:.02em}
@@ -348,61 +370,43 @@
     border-bottom-color:rgba(255,255,255,.14);
     backdrop-filter:none;
   }
-  @media (max-width:768px), (hover:none) and (pointer:coarse) and (max-width:1100px){
+  @media (max-width:768px){
     html,body{overflow-x:hidden;max-width:100%}
-    body{padding-top:62px}
+    body{padding-top:56px}
     body>header.nav{
       position:fixed;
       top:0;
       right:0;
       left:0;
       z-index:200;
-      height:62px;
+      height:56px;
       overflow:visible;
       background:#05060a;
     }
     .nav .nav-bar,.nav .wrap{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) 44px;
+      display:flex;
+      flex-wrap:nowrap;
       align-items:center;
-      gap:10px;
-      height:62px;
+      gap:8px;
+      height:56px;
       max-width:100%;
       padding-block:0;
       padding-inline:16px;
     }
     .brand{
-      grid-column:1;
+      flex:1;
       min-width:0;
-      gap:8px;
+      gap:6px;
       overflow:hidden;
-      font-size:1.2rem;
-      text-overflow:ellipsis;
+      font-size:1.05rem;
       white-space:nowrap;
     }
-    .brand .chest{width:28px;height:24px}
-    .nav-toggle{
-      display:inline-flex !important;
-      grid-column:2;
-      flex:none;
-      align-items:center;
-      justify-content:center;
-      width:44px;
-      height:44px;
-      margin:0;
-      padding:0;
-      border:1px solid var(--line);
-      border-radius:4px;
-      background:#14161d;
-      color:var(--ink);
-      font-size:1.35rem;
-      line-height:1;
-      cursor:pointer;
-    }
+    .brand .chest{width:22px;height:18px}
+    .nav-toggle{display:inline-flex !important}
     .nav .nav-links{
-      display:none !important;
+      display:none;
       position:fixed;
-      top:62px;
+      top:56px;
       right:0;
       left:0;
       z-index:201;
@@ -413,29 +417,31 @@
       width:100%;
       max-width:100%;
       margin:0;
-      padding:8px 16px 12px;
-      overflow-x:hidden;
+      padding:8px 12px 14px;
+      overflow:auto;
       border-bottom:1px solid rgba(255,255,255,.14);
       background:#05060a;
     }
-    .nav .nav-links.is-open{display:flex !important}
+    .nav .nav-links.is-open{display:flex}
     .nav .nav-links a{
       display:block;
       box-sizing:border-box;
       width:100%;
       max-width:100%;
-      padding:12px 8px;
-      overflow:hidden;
+      padding:12px 10px;
+      overflow:visible;
       font-size:1rem;
-      line-height:1.3;
-      text-overflow:ellipsis;
-      white-space:nowrap !important;
+      line-height:1.45;
+      white-space:nowrap;
       word-break:keep-all;
     }
     .nav .nav-links a[hidden]{display:none !important}
     img,video,iframe,.gmap{max-width:100%;height:auto}
+    .hero{min-height:0;padding-block:28px}
     .hero-grid,.preview-grid,.vals,.band,.course-grid,.apply-grid,.info-row,.eat-list,.detail-points{grid-template-columns:1fr}
     .hero-grid > *,.preview-grid > *,.band > *{min-width:0}
+    .hero h1{font-size:clamp(1.5rem,7.5vw,2.15rem);word-break:keep-all;overflow-wrap:break-word}
+    .lede{max-width:100%;font-size:1rem}
     .hero-media,.media-card,.band .fig,.video-card{width:100%;max-width:100%}
     .hero-media img,.hero-media video,.media-card .frame img,.media-card .frame video,.ccard img{width:100%;max-width:100%}
     .company-mark img{height:56px;max-width:100%;width:auto}
@@ -485,20 +491,22 @@
   .coming-prize{font-size:1.4rem}
   footer{font-size:1.15rem}
 
-  @media (min-width:769px) and (pointer:fine){
+  @media (min-width:769px){
     body{padding-top:0}
     body>header.nav{position:sticky;height:auto}
     .nav .nav-bar,.nav .wrap{
-      display:grid;
-      grid-template-columns:auto 1fr auto;
+      display:flex;
+      flex-wrap:nowrap;
+      align-items:center;
+      gap:16px;
       height:auto;
       padding-block:12px;
     }
-    .brand{grid-column:1;overflow:visible;font-size:3.05rem;gap:14px}
+    .brand{flex:none;overflow:visible;font-size:3.05rem;gap:14px}
     .brand .chest{width:62px;height:52px}
-    .nav-toggle{display:none !important}
+    .nav-toggle{display:none}
     .nav .nav-links{
-      display:flex !important;
+      display:flex;
       position:static;
       flex-direction:row;
       flex-wrap:nowrap;
@@ -506,7 +514,7 @@
       gap:8px;
       width:auto;
       max-width:none;
-      margin:0;
+      margin-left:auto;
       padding:0;
       overflow:visible;
       border:0;
@@ -522,6 +530,26 @@
       white-space:nowrap;
     }
   }
+  @media (max-width:768px){
+    html,body{overflow-x:hidden;max-width:100%}
+    body{padding-top:56px}
+    body>header.nav{position:fixed;top:0;right:0;left:0;z-index:200;height:56px;overflow:visible;background:#05060a}
+    .nav .nav-bar,.nav .wrap{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;height:56px;max-width:100%;padding-block:0;padding-inline:16px}
+    .brand{flex:1;min-width:0;gap:6px;font-size:1.05rem;white-space:nowrap}
+    .brand .chest{width:22px;height:18px}
+    .nav-toggle{display:inline-flex !important}
+    .nav .nav-links{display:none;position:fixed;top:56px;right:0;left:0;z-index:201;flex-direction:column;align-items:stretch;width:100%;max-width:100%;margin:0;padding:8px 12px 14px;background:#05060a;border-bottom:1px solid rgba(255,255,255,.14)}
+    .nav .nav-links.is-open{display:flex}
+    .nav .nav-links a{display:block;width:100%;padding:12px 10px;overflow:visible;font-size:1rem;line-height:1.45;white-space:nowrap;word-break:keep-all}
+    .nav .nav-links a[hidden]{display:none !important}
+    .hero{min-height:0;padding-block:28px}
+    .hero h1{font-size:clamp(1.5rem,7.5vw,2.15rem);word-break:keep-all;overflow-wrap:break-word}
+    .lede{max-width:100%;font-size:1rem}
+    .hero-grid,.preview-grid,.vals,.band,.course-grid{grid-template-columns:1fr}
+    .hero-media,.media-card,.video-card,img,video{max-width:100%}
+    .hero-media img,.hero-media video{width:100%}
+    .wrap,.hero .wrap{max-width:100%}
+  }
 </style>
 </head>
 <body>
@@ -529,6 +557,7 @@
 <header class="nav">
   <div class="wrap nav-bar">
     <div class="brand" data-go="home"><svg class="chest" viewBox="0 0 80 68" aria-hidden="true"><path d="M18 36 10 12c16-10 44-10 60 0L62 36c-12-6-32-6-44 0z" fill="#f6d36a"/><path d="M16 18c14-6 38-6 50 0" fill="none" stroke="#7a4a0e" stroke-width="2.2" stroke-linecap="round"/><path d="M14 34h52v8c-8 4-44 4-52 0v-8z" fill="#5c3a12"/><ellipse cx="40" cy="38" rx="18" ry="5" fill="#ffe9ad"/><circle cx="29" cy="36" r="4" fill="#ffd56a" stroke="#8a5410" stroke-width="1.1"/><circle cx="40" cy="34" r="4.5" fill="#fff6d0" stroke="#8a5410" stroke-width="1.1"/><circle cx="51" cy="37" r="3.5" fill="#f0c14a" stroke="#8a5410" stroke-width="1.1"/><path d="M12 42h56v14c0 6-5 8-10 8H22c-5 0-10-2-10-8V42z" fill="#e2a52e"/><path d="M12 42h56v6H12z" fill="#c4841c"/><rect x="35" y="50" width="10" height="8" rx="1.6" fill="#6b3f10"/><circle cx="40" cy="54" r="1.6" fill="#ffe9ad"/></svg>보물 여행</div>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="메뉴 열기">☰</button>
     <nav class="nav-links" id="siteNav">
       <a data-go="home">홈</a>
       <a data-go="courses">전체 코스</a>
@@ -538,7 +567,6 @@
       <a href="/order">주문</a>
       <a href="/login" id="loginLink">로그인</a>
     </nav>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="메뉴 열기">☰</button>
   </div>
 </header>
 
