@@ -3,10 +3,7 @@ function resolveApiBase() {
   if (typeof fromEnv === 'string' && fromEnv.trim()) {
     return fromEnv.trim().replace(/\/$/, '');
   }
-  if (import.meta.env.DEV) {
-    return 'http://localhost:4000';
-  }
-  return '';
+  return 'http://localhost:4000';
 }
 
 export const API_BASE = resolveApiBase();
