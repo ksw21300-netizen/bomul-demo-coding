@@ -7,9 +7,8 @@ const LOCAL_MONGODB_URI = 'mongodb://127.0.0.1:27017/coding-bomul';
 let connecting;
 
 function mongoUri() {
-  return process.env.MONGODB_ATLAS_URL?.trim()
-    || process.env.MONGO_URI?.trim()
-    || LOCAL_MONGODB_URI;
+  const atlas = (process.env.MONGO_ATLAS_URL || process.env.MONGOOB_ATLAS_URL || '').trim();
+  return atlas || LOCAL_MONGODB_URI;
 }
 
 function usingAtlas(uri) {
@@ -30,7 +29,7 @@ export async function connectDb() {
     connecting = (async () => {
       const uri = mongoUri();
       if (process.env.VERCEL && uri === LOCAL_MONGODB_URI) {
-        const error = new Error('MongoDB 주소가 없습니다. Vercel Environment Variables의 MONGO_URI를 확인하세요.');
+        const error = new Error('MongoDB 주소가 없습니다. MONGO_ATLAS_URL을 확인하세요.');
         error.status = 500;
         throw error;
       }
