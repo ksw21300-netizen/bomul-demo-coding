@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import AuthMenu from './AuthMenu.jsx';
 import CartLink from './CartLink.jsx';
 
@@ -9,7 +9,7 @@ function storedToken() {
   return localStorage.getItem('token') || sessionStorage.getItem('token');
 }
 
-function BoardNavLink() {
+function BoardNavLink({ onClick }) {
   const [show, setShow] = useState(() => Boolean(storedToken()));
 
   useEffect(() => {
@@ -32,17 +32,41 @@ function BoardNavLink() {
   }, []);
 
   if (!show) return null;
-  return <NavLink to="/board">게시판</NavLink>;
+  return (
+    <NavLink to="/board" onClick={onClick}>
+      게시판
+    </NavLink>
+  );
 }
 
 function SiteNav({ onToggleTheme }) {
+  const { pathname } = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    function onKeyDown(event) {
+      if (event.key === 'Escape') setMenuOpen(false);
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [menuOpen]);
+
+  function closeMenu() {
+    setMenuOpen(false);
+  }
+
   return (
     <header className="nav">
-      <div className="wrap">
-        <Link className="brand" to="/">
+      <div className="wrap nav-bar">
+        <Link className="brand" to="/" onClick={closeMenu}>
           <span className="seal">寶</span>보물 여행
         </Link>
-        <nav>
+        <nav className="nav-links" aria-label="주요 메뉴">
           <NavLink to="/" end>
             홈
           </NavLink>
@@ -57,7 +81,41 @@ function SiteNav({ onToggleTheme }) {
           <AuthMenu />
           <CartLink />
         </div>
+        <button
+          className="nav-toggle"
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
+          aria-label={menuOpen ? '메뉴 닫기' : '메뉴 열기'}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          ☰
+        </button>
       </div>
+      <nav
+        className={`nav-drawer${menuOpen ? ' is-open' : ''}`}
+        id="mobile-nav"
+        aria-label="모바일 메뉴"
+      >
+        <NavLink to="/" end onClick={closeMenu}>
+          홈
+        </NavLink>
+        <NavLink to="/courses" onClick={closeMenu}>
+          전체 코스
+        </NavLink>
+        <NavLink to="/apply" onClick={closeMenu}>
+          신청·문의
+        </NavLink>
+        <NavLink to="/cart" onClick={closeMenu}>
+          장바구니
+        </NavLink>
+        <NavLink to="/order" onClick={closeMenu}>
+          주문
+        </NavLink>
+        <NavLink to="/login" onClick={closeMenu}>
+          로그인
+        </NavLink>
+      </nav>
     </header>
   );
 }

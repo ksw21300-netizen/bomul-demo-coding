@@ -12,7 +12,7 @@ function clearToken() {
   sessionStorage.removeItem('token');
 }
 
-function AuthMenu() {
+function AuthMenu({ onNavigate }) {
   const [user, setUser] = useState(null);
   const [checking, setChecking] = useState(() => Boolean(storedToken()));
   const [menuOpen, setMenuOpen] = useState(false);
@@ -64,6 +64,7 @@ function AuthMenu() {
     clearToken();
     setMenuOpen(false);
     setUser(null);
+    onNavigate?.();
   }
 
   if (checking) return null;
@@ -71,7 +72,7 @@ function AuthMenu() {
   if (user) {
     return (
       <>
-        <Link className="btn btn-ghost btn-sm" to="/admin">
+        <Link className="btn btn-ghost btn-sm" to="/admin" onClick={onNavigate}>
           어드민
         </Link>
         <div className="user-menu" ref={menuRef}>
@@ -99,10 +100,10 @@ function AuthMenu() {
 
   return (
     <div className="nav-auth">
-      <Link className="btn btn-ghost btn-sm" to="/login">
+      <Link className="btn btn-ghost btn-sm" to="/login" onClick={onNavigate}>
         로그인
       </Link>
-      <Link className="btn btn-primary btn-sm" to="/signup">
+      <Link className="btn btn-primary btn-sm" to="/signup" onClick={onNavigate}>
         회원가입
       </Link>
     </div>

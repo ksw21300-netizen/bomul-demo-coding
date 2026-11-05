@@ -40,6 +40,7 @@
     color-scheme:dark;
   }
   *{box-sizing:border-box}
+  html,body{max-width:100%;overflow-x:hidden}
   body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
   h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;line-height:1.26;margin:0}
   p{margin:0}
@@ -52,9 +53,10 @@
   .nav .wrap{display:flex;align-items:center;gap:16px;padding-block:12px}
   .brand{display:flex;align-items:center;gap:14px;font-family:var(--display);font-weight:700;font-size:3.05rem;color:var(--feature-blue);cursor:pointer;white-space:nowrap;flex:none}
   .brand .chest{width:62px;height:52px;flex:none;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
-  .nav nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .nav nav a{font-size:1.4rem;color:var(--muted);padding:8px 14px;border-radius:4px;cursor:pointer}
+  .nav .nav-links{margin-left:auto;display:flex;gap:8px;flex-wrap:nowrap;align-items:center}
+  .nav nav a{font-size:1.4rem;color:var(--muted);padding:8px 14px;border-radius:4px;cursor:pointer;white-space:nowrap}
   .nav nav a:hover,.nav nav a.on{color:var(--ink);background:var(--surface-2)}
+  .nav-toggle{display:none}
 
   /* buttons */
   .btn{font:inherit;font-weight:700;border-radius:3px;padding:12px 24px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;border:1px solid transparent;letter-spacing:.02em}
@@ -309,9 +311,6 @@
     .apply-grid{grid-template-columns:1fr}
   }
   @media (max-width:540px){
-    .nav nav a{padding:8px 10px;font-size:1.15rem}
-    .brand{font-size:2.35rem}
-    .brand .chest{width:42px;height:36px}
     .preview-grid{grid-template-columns:1fr}
     .course-grid{grid-template-columns:1fr}
     .story-list{grid-template-columns:1fr}
@@ -337,8 +336,90 @@
     --shadow:0 16px 40px rgba(0,0,0,.35);
     color:var(--ink);
   }
-  body>header,body>main,body>section,body>footer{position:relative;z-index:1}
-  .nav{background:rgba(5,6,10,.55);border-bottom-color:rgba(255,255,255,.14)}
+  body>main,body>section,body>footer{position:relative;z-index:1}
+  body>header.nav{
+    position:sticky;
+    top:0;
+    top:env(safe-area-inset-top,0px);
+    z-index:200;
+    background:#05060a;
+    border-bottom-color:rgba(255,255,255,.14);
+    backdrop-filter:none;
+  }
+  @media (max-width:768px){
+    body{padding-top:62px}
+    body>header.nav{
+      position:fixed;
+      top:0;
+      right:0;
+      left:0;
+      z-index:200;
+      height:62px;
+      overflow:visible;
+      background:#05060a;
+    }
+    .nav .nav-bar{
+      flex-wrap:nowrap;
+      align-items:center;
+      gap:10px;
+      height:62px;
+      max-width:100%;
+      padding-block:0;
+    }
+    .brand{min-width:0;gap:8px;font-size:1.2rem;overflow:hidden;text-overflow:ellipsis}
+    .brand .chest{width:28px;height:24px}
+    .nav-toggle{
+      display:inline-flex !important;
+      flex:none;
+      align-items:center;
+      justify-content:center;
+      width:44px;
+      height:44px;
+      margin-left:auto;
+      padding:0;
+      border:1px solid var(--line);
+      border-radius:4px;
+      background:#14161d;
+      color:var(--ink);
+      font-size:1.35rem;
+      line-height:1;
+      cursor:pointer;
+    }
+    .nav .nav-links{
+      display:none !important;
+      position:fixed;
+      top:62px;
+      right:0;
+      left:0;
+      z-index:201;
+      flex-direction:column;
+      flex-wrap:nowrap;
+      align-items:stretch;
+      gap:0;
+      width:100%;
+      max-width:100%;
+      margin:0;
+      padding:8px 16px 12px;
+      overflow-x:hidden;
+      border-bottom:1px solid rgba(255,255,255,.14);
+      background:#05060a;
+    }
+    .nav .nav-links.is-open{display:flex !important}
+    .nav .nav-links a{
+      display:block;
+      box-sizing:border-box;
+      width:100%;
+      max-width:100%;
+      padding:12px 8px;
+      overflow:hidden;
+      font-size:1rem;
+      line-height:1.3;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      word-break:keep-all;
+    }
+    .nav .nav-links a[hidden]{display:none !important}
+  }
   .btn-primary,.chip[aria-pressed="true"],.tl-dot{background:#14685e;color:#fff;border-color:#14685e}
   .field input,.field textarea{background:rgba(5,6,10,.72)}
   main,.coming,footer{font-size:1.28rem}
@@ -387,9 +468,9 @@
 <body>
 <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
 <header class="nav">
-  <div class="wrap">
+  <div class="wrap nav-bar">
     <div class="brand" data-go="home"><svg class="chest" viewBox="0 0 80 68" aria-hidden="true"><path d="M18 36 10 12c16-10 44-10 60 0L62 36c-12-6-32-6-44 0z" fill="#f6d36a"/><path d="M16 18c14-6 38-6 50 0" fill="none" stroke="#7a4a0e" stroke-width="2.2" stroke-linecap="round"/><path d="M14 34h52v8c-8 4-44 4-52 0v-8z" fill="#5c3a12"/><ellipse cx="40" cy="38" rx="18" ry="5" fill="#ffe9ad"/><circle cx="29" cy="36" r="4" fill="#ffd56a" stroke="#8a5410" stroke-width="1.1"/><circle cx="40" cy="34" r="4.5" fill="#fff6d0" stroke="#8a5410" stroke-width="1.1"/><circle cx="51" cy="37" r="3.5" fill="#f0c14a" stroke="#8a5410" stroke-width="1.1"/><path d="M12 42h56v14c0 6-5 8-10 8H22c-5 0-10-2-10-8V42z" fill="#e2a52e"/><path d="M12 42h56v6H12z" fill="#c4841c"/><rect x="35" y="50" width="10" height="8" rx="1.6" fill="#6b3f10"/><circle cx="40" cy="54" r="1.6" fill="#ffe9ad"/></svg>보물 여행</div>
-    <nav>
+    <nav class="nav-links" id="siteNav">
       <a data-go="home">홈</a>
       <a data-go="courses">전체 코스</a>
       <a data-go="apply">신청·문의</a>
@@ -398,6 +479,7 @@
       <a href="/order">주문</a>
       <a href="/login" id="loginLink">로그인</a>
     </nav>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="메뉴 열기">☰</button>
   </div>
 </header>
 
@@ -2365,10 +2447,17 @@ function renderDetail(id){
 }
 
 function go(name){ location.hash = name; }
+function closeMobileNav(){
+  const nav=$("#siteNav");
+  const btn=document.querySelector(".nav-toggle");
+  if(nav) nav.classList.remove("is-open");
+  if(btn){ btn.setAttribute("aria-expanded","false"); btn.setAttribute("aria-label","메뉴 열기"); }
+}
 function show(viewKey){
   Object.values(views).forEach(sel=>{const el=$(sel);if(el)el.hidden=true;});
   const el=$(views[viewKey]); if(el) el.hidden=false;
   document.querySelectorAll('.nav nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===viewKey));
+  closeMobileNav();
   window.scrollTo({top:0,behavior:'auto'});
 }
 function route(){
@@ -2395,6 +2484,16 @@ document.addEventListener('click',async e=>{
   if(back){ openMemberModal(); return; }
   const buy=e.target.closest('[data-buy-membership]');
   if(buy){ await buyMembership(buy); return; }
+  const toggle=e.target.closest('.nav-toggle');
+  if(toggle){
+    const nav=$("#siteNav");
+    if(!nav) return;
+    const open=nav.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded",open);
+    toggle.setAttribute("aria-label",open?"메뉴 닫기":"메뉴 열기");
+    return;
+  }
+  if(e.target.closest('.nav nav a')) closeMobileNav();
   const goEl=e.target.closest('[data-go]'); if(goEl){ go(goEl.dataset.go); return; }
   const card=e.target.closest('[data-course]'); if(card){ location.hash="course-"+card.dataset.course; return; }
   const chip=e.target.closest('[data-region]'); if(chip){ activeRegion=chip.dataset.region; renderCourses(); return; }
@@ -2402,6 +2501,7 @@ document.addEventListener('click',async e=>{
 window.addEventListener('hashchange',route);
 document.addEventListener('keydown',e=>{
   if(e.key==="Escape" && $("#memberModal") && !$("#memberModal").hidden) closeMemberModal();
+  if(e.key==="Escape") closeMobileNav();
 });
 
 /* 폼 */
