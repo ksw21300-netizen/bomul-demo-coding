@@ -1,0 +1,11 @@
+{
+  "name": "coding-bomul",
+  "private": true,
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "heroku-postbuild": "npm install --omit=dev --prefix server",
+    "start": "node server/src/server.js"
+  }
+}
