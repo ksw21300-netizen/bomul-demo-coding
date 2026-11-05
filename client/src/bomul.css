@@ -106,7 +106,8 @@
 }
 
 .bomul .nav .wrap {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
   gap: 16px;
   padding-block: 12px;
@@ -115,12 +116,15 @@
 
 .bomul .brand {
   display: flex;
+  grid-column: 1;
   align-items: center;
   gap: 12px;
+  min-width: 0;
   color: var(--feature-blue);
   font-family: var(--display);
   font-size: 2.4rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .bomul .brand .seal {
@@ -138,9 +142,11 @@
 
 .bomul .nav-links {
   display: none;
+  grid-column: 2;
   flex-wrap: nowrap;
   gap: 4px;
-  margin-left: auto;
+  justify-self: end;
+  margin-left: 0;
 }
 
 .bomul .nav-links a,
@@ -161,12 +167,13 @@
 
 .bomul .nav-toggle {
   display: inline-flex;
+  grid-column: 4;
   flex: none;
   align-items: center;
   justify-content: center;
   width: 44px;
   height: 44px;
-  margin-left: auto;
+  margin-left: 0;
   padding: 0;
   border: 1px solid var(--line);
   border-radius: 4px;
@@ -183,6 +190,7 @@
 
 .bomul .nav-tools {
   display: none;
+  grid-column: 3;
   flex: none;
   align-items: center;
   gap: 10px;
@@ -1635,7 +1643,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px), (hover: none) and (pointer: coarse) and (max-width: 1100px) {
   .bomul {
     max-width: 100%;
     overflow-x: hidden;
@@ -1660,7 +1668,8 @@
 
   .bomul .nav .wrap,
   .bomul .nav-bar {
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px;
     align-items: center;
     gap: 10px;
     height: 62px;
@@ -1670,6 +1679,7 @@
   }
 
   .bomul .brand {
+    grid-column: 1;
     min-width: 0;
     gap: 8px;
     overflow: hidden;
@@ -1691,12 +1701,13 @@
 
   .bomul .nav-toggle {
     display: inline-flex !important;
+    grid-column: 2;
     flex: none;
     align-items: center;
     justify-content: center;
     width: 44px;
     height: 44px;
-    margin-left: auto;
+    margin-left: 0;
     padding: 0;
     border: 1px solid var(--line);
     border-radius: 4px;
@@ -1742,6 +1753,64 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: keep-all;
+  }
+
+  .bomul :is(img, video, iframe) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .bomul .hero-grid,
+  .bomul .preview-grid,
+  .bomul .vals,
+  .bomul .band,
+  .bomul .course-grid,
+  .bomul .apply-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bomul .hero-media,
+  .bomul .band .fig {
+    max-width: 100%;
+  }
+
+  .bomul .cart-link {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) and (pointer: fine) {
+  .bomul {
+    padding-top: 0;
+  }
+
+  .bomul .nav {
+    position: sticky;
+    height: auto;
+  }
+
+  .bomul .nav .wrap,
+  .bomul .nav-bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    height: auto;
+    padding-block: 12px;
+    padding-right: 72px;
+  }
+
+  .bomul .brand {
+    overflow: visible;
+    font-size: 2.4rem;
+  }
+
+  .bomul .nav-links,
+  .bomul .nav-tools {
+    display: flex;
+  }
+
+  .bomul .nav-toggle,
+  .bomul .nav-drawer {
+    display: none;
   }
 }
 

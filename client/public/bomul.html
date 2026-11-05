@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>보물 여행</title>
 <meta name="description" content="역사와 설화를 찾아 떠나는 전설여행 — 코스 소개와 신청">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,6 +40,7 @@
     color-scheme:dark;
   }
   *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   html,body{max-width:100%;overflow-x:hidden}
   body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
   h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;line-height:1.26;margin:0}
@@ -50,10 +51,11 @@
 
   /* header */
   .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .nav .wrap{display:flex;align-items:center;gap:16px;padding-block:12px}
-  .brand{display:flex;align-items:center;gap:14px;font-family:var(--display);font-weight:700;font-size:3.05rem;color:var(--feature-blue);cursor:pointer;white-space:nowrap;flex:none}
+  .nav .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;padding-block:12px}
+  .brand{display:flex;align-items:center;gap:14px;grid-column:1;min-width:0;font-family:var(--display);font-weight:700;font-size:3.05rem;color:var(--feature-blue);cursor:pointer;white-space:nowrap}
   .brand .chest{width:62px;height:52px;flex:none;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
-  .nav .nav-links{margin-left:auto;display:flex;gap:8px;flex-wrap:nowrap;align-items:center}
+  .nav .nav-links{grid-column:2;justify-self:end;margin-left:0;display:flex;gap:8px;flex-wrap:nowrap;align-items:center}
+  .nav-toggle{grid-column:3}
   .nav nav a{font-size:1.4rem;color:var(--muted);padding:8px 14px;border-radius:4px;cursor:pointer;white-space:nowrap}
   .nav nav a:hover,.nav nav a.on{color:var(--ink);background:var(--surface-2)}
   .nav-toggle{display:none}
@@ -82,7 +84,7 @@
   .hero{position:relative;min-height:calc(100vh - 78px);display:grid;align-items:center;padding-block:clamp(48px,8vw,88px);background:transparent;color:#f7f3ea}
   .hero .wrap{max-width:1320px}
   .starfield{position:fixed;inset:0;width:100%;height:100%;display:block;pointer-events:none;z-index:0}
-  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(240px,.62fr) minmax(0,1.38fr);gap:clamp(20px,3vw,40px);align-items:center}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1.38fr);gap:clamp(20px,3vw,40px);align-items:center}
   .eyebrow{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#e4c27a;font-weight:700;margin-bottom:16px}
   .hero h1{font-size:clamp(2.1rem,5.2vw,3.3rem);font-weight:700;color:#fff;text-shadow:0 2px 22px rgba(0,0,0,.7)}
   .hero h1 .hl{color:#f3d48a}
@@ -346,7 +348,8 @@
     border-bottom-color:rgba(255,255,255,.14);
     backdrop-filter:none;
   }
-  @media (max-width:768px){
+  @media (max-width:768px), (hover:none) and (pointer:coarse) and (max-width:1100px){
+    html,body{overflow-x:hidden;max-width:100%}
     body{padding-top:62px}
     body>header.nav{
       position:fixed;
@@ -358,24 +361,35 @@
       overflow:visible;
       background:#05060a;
     }
-    .nav .nav-bar{
-      flex-wrap:nowrap;
+    .nav .nav-bar,.nav .wrap{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 44px;
       align-items:center;
       gap:10px;
       height:62px;
       max-width:100%;
       padding-block:0;
+      padding-inline:16px;
     }
-    .brand{min-width:0;gap:8px;font-size:1.2rem;overflow:hidden;text-overflow:ellipsis}
+    .brand{
+      grid-column:1;
+      min-width:0;
+      gap:8px;
+      overflow:hidden;
+      font-size:1.2rem;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
     .brand .chest{width:28px;height:24px}
     .nav-toggle{
       display:inline-flex !important;
+      grid-column:2;
       flex:none;
       align-items:center;
       justify-content:center;
       width:44px;
       height:44px;
-      margin-left:auto;
+      margin:0;
       padding:0;
       border:1px solid var(--line);
       border-radius:4px;
@@ -415,10 +429,17 @@
       font-size:1rem;
       line-height:1.3;
       text-overflow:ellipsis;
-      white-space:nowrap;
+      white-space:nowrap !important;
       word-break:keep-all;
     }
     .nav .nav-links a[hidden]{display:none !important}
+    img,video,iframe,.gmap{max-width:100%;height:auto}
+    .hero-grid,.preview-grid,.vals,.band,.course-grid,.apply-grid,.info-row,.eat-list,.detail-points{grid-template-columns:1fr}
+    .hero-grid > *,.preview-grid > *,.band > *{min-width:0}
+    .hero-media,.media-card,.band .fig,.video-card{width:100%;max-width:100%}
+    .hero-media img,.hero-media video,.media-card .frame img,.media-card .frame video,.ccard img{width:100%;max-width:100%}
+    .company-mark img{height:56px;max-width:100%;width:auto}
+    .wrap,.hero .wrap{max-width:100%}
   }
   .btn-primary,.chip[aria-pressed="true"],.tl-dot{background:#14685e;color:#fff;border-color:#14685e}
   .field input,.field textarea{background:rgba(5,6,10,.72)}
@@ -464,30 +485,16 @@
   .coming-prize{font-size:1.4rem}
   footer{font-size:1.15rem}
 
-  /* 기본은 휴대폰: 로고+햄버거만. PC(769px+)만 가로 메뉴 */
-  .nav-toggle{
-    display:inline-flex !important;
-    flex:none;
-    align-items:center;
-    justify-content:center;
-    width:44px;
-    height:44px;
-    margin-left:auto;
-    padding:0;
-    border:1px solid var(--line);
-    border-radius:4px;
-    background:#14161d;
-    color:var(--ink);
-    font-size:1.35rem;
-    line-height:1;
-    cursor:pointer;
-  }
-  .nav .nav-links{display:none !important}
-  @media (min-width:769px){
+  @media (min-width:769px) and (pointer:fine){
     body{padding-top:0}
     body>header.nav{position:sticky;height:auto}
-    .nav .nav-bar{height:auto;padding-block:12px}
-    .brand{font-size:3.05rem;gap:14px;overflow:visible}
+    .nav .nav-bar,.nav .wrap{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      height:auto;
+      padding-block:12px;
+    }
+    .brand{grid-column:1;overflow:visible;font-size:3.05rem;gap:14px}
     .brand .chest{width:62px;height:52px}
     .nav-toggle{display:none !important}
     .nav .nav-links{
@@ -499,7 +506,7 @@
       gap:8px;
       width:auto;
       max-width:none;
-      margin-left:auto;
+      margin:0;
       padding:0;
       overflow:visible;
       border:0;
@@ -513,25 +520,6 @@
       overflow:visible;
       font-size:1.4rem;
       white-space:nowrap;
-    }
-  }
-  @media (max-width:768px){
-    .nav .nav-links.is-open{
-      display:flex !important;
-      position:fixed;
-      top:62px;
-      right:0;
-      left:0;
-      z-index:201;
-      flex-direction:column;
-      flex-wrap:nowrap;
-      width:100%;
-      max-width:100%;
-      margin:0;
-      padding:8px 16px 12px;
-      overflow-x:hidden;
-      border-bottom:1px solid rgba(255,255,255,.14);
-      background:#05060a;
     }
   }
 </style>
