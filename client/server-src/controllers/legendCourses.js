@@ -1,12 +1,8 @@
-import { readFileSync } from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import LegendCourse from '../models/LegendCourse.js';
+import legendSeed from '../data/legendCourses.json' with { type: 'json' };
 
 const SEED_VERSION = 2;
-const LEGEND_SEED = JSON.parse(
-  readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '../data/legendCourses.json'), 'utf8'),
-);
+const LEGEND_SEED = legendSeed;
 
 function httpError(status, message) {
   const error = new Error(message);
