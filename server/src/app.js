@@ -60,6 +60,14 @@ app.use((req, res, next) => {
 
 app.use(express.json({ limit: '4mb' }));
 
+app.get('/', (req, res) => {
+  res.json({
+    status: 'ok',
+    message: '보물 여행 API 서버입니다.',
+    health: '/api/health',
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
