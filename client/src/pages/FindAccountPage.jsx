@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-const API_BASE = 'http://localhost:4000';
+import { API_BASE } from '../apiBase.js';
 
 const emptyIdForm = { name: '', email: '' };
 const emptyPasswordForm = { user_id: '', name: '', phone: '', email: '', password: '', password_confirm: '' };

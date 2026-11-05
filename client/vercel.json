@@ -1,5 +1,11 @@
 {
+  "functions": {
+    "api/[...path].js": {
+      "includeFiles": "server-src/**",
+      "maxDuration": 10
+    }
+  },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-
-const API_BASE = 'http://localhost:4000';
+import { API_BASE } from '../apiBase.js';
 const CONTACT_EMAIL = 'ksw2130@naver.com';
 
 function ApplyPage() {

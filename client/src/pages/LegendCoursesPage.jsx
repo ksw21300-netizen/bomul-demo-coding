@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import './admin.css';
-
-const API_BASE = 'http://localhost:4000';
+import { API_BASE } from '../apiBase.js';
 const INFO_FIELDS = ['거리', '소요시간', '난이도', '집결지'];
 
 function storedToken() {

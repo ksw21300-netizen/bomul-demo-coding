@@ -10,8 +10,10 @@ import ordersRouter from './routes/orders.js';
 import authRouter from './routes/auth.js';
 import meRouter from './routes/me.js';
 import usersRouter from './routes/users.js';
+import { connectDb } from './db.js';
 
 const app = express();
+app.set('trust proxy', 1);
 
 function isLocalClient(origin) {
   try {
@@ -24,9 +26,23 @@ function isLocalClient(origin) {
   }
 }
 
+function allowedOrigins() {
+  const extra = (process.env.CLIENT_ORIGIN ?? 'https://bomul-demo-vercel.vercel.app')
+    .split(',')
+    .map((value) => value.trim().replace(/\/$/, ''))
+    .filter(Boolean);
+  return extra;
+}
+
+function isAllowedOrigin(origin) {
+  if (!origin) return false;
+  if (isLocalClient(origin)) return true;
+  return allowedOrigins().includes(origin.replace(/\/$/, ''));
+}
+
 app.use((req, res, next) => {
   const origin = req.get('origin');
-  if (origin && isLocalClient(origin)) {
+  if (origin && isAllowedOrigin(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -36,6 +52,10 @@ app.use((req, res, next) => {
     return;
   }
   next();
+});
+
+app.use((req, res, next) => {
+  connectDb().then(() => next()).catch(next);
 });
 
 app.use(express.json({ limit: '4mb' }));

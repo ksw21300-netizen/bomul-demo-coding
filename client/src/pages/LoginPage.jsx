@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-
-const API_BASE = 'http://localhost:4000';
+import { API_BASE } from '../apiBase.js';
 
 function storedToken() {
   return localStorage.getItem('token') || sessionStorage.getItem('token');

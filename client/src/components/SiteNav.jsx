@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import AuthMenu from './AuthMenu.jsx';
 import CartLink from './CartLink.jsx';
-
-const API_BASE = 'http://localhost:4000';
+import { API_BASE } from '../apiBase.js';
 
 function storedToken() {
   return localStorage.getItem('token') || sessionStorage.getItem('token');

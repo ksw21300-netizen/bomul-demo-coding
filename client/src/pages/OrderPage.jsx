@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-const API_BASE = 'http://localhost:4000';
+import { API_BASE } from '../apiBase.js';
 const PAYMENT_METHODS = ['신용카드', '계좌이체', '네이버페이'];
 
 function storedToken() {

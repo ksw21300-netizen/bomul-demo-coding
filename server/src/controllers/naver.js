@@ -2,9 +2,10 @@ import { randomBytes } from 'node:crypto';
 import User from '../models/User.js';
 import { signToken } from '../middleware/auth.js';
 
-const CLIENT_URL = 'http://localhost:5173';
+const CLIENT_URL = (process.env.CLIENT_URL ?? 'http://localhost:5173').replace(/\/$/, '');
 // 네이버 개발자센터에 등록한 Callback URL과 글자 하나까지 같아야 한다.
-const CALLBACK_URL = 'http://localhost:4000/api/login/naver/callback';
+const CALLBACK_URL = process.env.NAVER_CALLBACK_URL
+  ?? 'http://localhost:4000/api/login/naver/callback';
 const STATE_COOKIE = 'naver_state';
 const STATE_COOKIE_OPTIONS = { httpOnly: true, sameSite: 'lax', path: '/api/login/naver' };
 
