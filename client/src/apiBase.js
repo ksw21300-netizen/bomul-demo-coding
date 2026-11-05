@@ -6,7 +6,7 @@ function resolveApiBase() {
   if (import.meta.env.DEV) {
     return 'http://localhost:4000';
   }
-  return 'https://audience-because-shopzilla-discrimination.trycloudflare.com';
+  return 'https://polar-forget-liked-optional.trycloudflare.com';
 }
 
 export const API_BASE = resolveApiBase();
