@@ -34,9 +34,19 @@ function allowedOrigins() {
   return extra;
 }
 
+function isVercelOrigin(origin) {
+  try {
+    const url = new URL(origin);
+    return url.protocol === 'https:' && (url.hostname === 'vercel.app' || url.hostname.endsWith('.vercel.app'));
+  } catch {
+    return false;
+  }
+}
+
 function isAllowedOrigin(origin) {
   if (!origin) return false;
   if (isLocalClient(origin)) return true;
+  if (isVercelOrigin(origin)) return true;
   return allowedOrigins().includes(origin.replace(/\/$/, ''));
 }
 
