@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { API_BASE } from '../apiBase.js';
-const CONTACT_EMAIL = 'ksw2130@naver.com';
+const CONTACT_EMAIL = 'ksw21300@gmail.com';
 
 function ApplyPage() {
   const [toast, setToast] = useState(null);
